@@ -1,4 +1,31 @@
 #!/bin/bash
+
+# startup-synchronizer.sh
+#
+# Description: Automated cloud deployment script for Multisynq Synchronizer
+# Purpose: Complete setup from fresh Ubuntu instance to running synchronizer with Enterprise API
+#
+# Usage: 
+#   1. Replace [your-api-key] with your Enterprise API key
+#   2. Use as User Data script during cloud instance creation
+#   3. Or run manually: sudo bash startup-synchronizer.sh
+#
+# Supported Platforms:
+# - AWS EC2 (Ubuntu AMI)
+# - DigitalOcean Droplets
+# - Google Cloud Compute Engine
+# - Azure Virtual Machines
+# - Any Ubuntu/Debian instance
+#
+# What it does:
+# 1. Updates system packages
+# 2. Installs Docker with official repository
+# 3. Configures Docker permissions
+# 4. Installs Node.js via NVM
+# 5. Installs synchronizer-cli globally
+# 6. Runs synchronizer with Enterprise API key
+#
+# Exit on any error
 set -e
 
 echo "🚀 Starting Synchronizer Setup..."
@@ -8,6 +35,9 @@ apt-get install -y curl wget gnupg lsb-release ca-certificates apt-transport-htt
 
 # Install Docker
 echo "🐳 Installing Docker..."
+# Function: install_docker
+# Purpose: Install Docker CE from official Docker repository
+# Sets up GPG keys, adds repository, and installs latest Docker packages
 install_docker() {
   mkdir -m 0755 -p /etc/apt/keyrings
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg

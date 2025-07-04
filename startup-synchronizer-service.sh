@@ -1,4 +1,31 @@
 #!/bin/bash
+
+# startup-synchronizer-service.sh
+#
+# Description: Full automated setup with systemd services for Multisynq Synchronizer
+# Purpose: Complete deployment including Docker, synchronizer, and persistent services
+#
+# Usage:
+#   1. Edit the constants section with your values:
+#      - API_KEY: Your synq key
+#      - WALLET: Your wallet address
+#      - DASHBOARD_PASSWORD: Password for web dashboard
+#   2. Run as root: sudo bash startup-synchronizer-service.sh
+#
+# What it does:
+# 1. Installs system dependencies
+# 2. Installs Docker and configures permissions
+# 3. Installs Node.js via NVM for ubuntu user
+# 4. Installs synchronizer-cli globally
+# 5. Creates configuration file with provided credentials
+# 6. Generates and installs systemd services
+# 7. Starts both synchronizer and web dashboard as services
+#
+# Services created:
+# - synchronizer-cli.service: Main synchronizer container
+# - synchronizer-cli-web.service: Web dashboard on port 3000
+#
+# Exit on any error
 set -e
 
 echo "🚀 Starting full synchronizer setup..."

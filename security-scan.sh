@@ -1,5 +1,23 @@
 #!/bin/bash
 
+# security-scan.sh
+# 
+# Description: Comprehensive security vulnerability scanner for the synchronizer-cli project
+# Purpose: Detect potential secrets, API keys, passwords, and other sensitive data before publishing
+# 
+# Usage: ./security-scan.sh
+# 
+# Features:
+# - Scans only files that will be published (index.js, README.md, package.json)
+# - Detects multiple patterns: API keys, tokens, passwords, AWS credentials, JWT tokens
+# - Whitelist mechanism for known safe patterns
+# - Color-coded output for easy identification
+# - Returns non-zero exit code if issues found
+#
+# Exit codes:
+# - 0: No security issues found
+# - 1: Potential sensitive data detected
+
 echo "🔒 Running comprehensive security scan..."
 echo "========================================"
 

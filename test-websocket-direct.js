@@ -1,5 +1,26 @@
 #!/usr/bin/env node
 
+/**
+ * @fileoverview Direct WebSocket connection test utility
+ * @description Standalone test script for validating WebSocket connectivity to the synchronizer container.
+ * Tests connection to localhost:3333, sends various request types, and analyzes response quality.
+ * 
+ * @module test-websocket-direct
+ * @requires ws
+ * @requires chalk
+ * @requires child_process
+ * 
+ * Usage: node test-websocket-direct.js
+ * 
+ * Tests performed:
+ * - Container availability check
+ * - WebSocket connection establishment
+ * - Multiple request types (stats, debug, queryWalletStats, pingFromMain)
+ * - Periodic stats polling every 5 seconds
+ * - Data quality analysis
+ * - Response time measurement
+ */
+
 const WebSocket = require('ws');
 const chalk = require('chalk');
 
@@ -161,6 +182,24 @@ setTimeout(() => {
   }
 }, 30000);
 
+/**
+ * Analyzes WebSocket data quality to determine if real activity is present
+ * @function analyzeDataQuality
+ * @param {Object} data - WebSocket response data to analyze
+ * @returns {string} Quality assessment message with emoji indicators
+ * @complexity O(1) - Fixed number of field checks
+ * @description Checks for:
+ * - Non-zero sessions and users (real activity)
+ * - Lifetime points (earning history)
+ * - Network traffic (bytes in/out)
+ * - Connection state validity
+ * Returns categorized assessment:
+ * - ❌ ALL ZEROS - No activity
+ * - ⚠️ CONNECTED BUT NO ACTIVITY - Waiting state
+ * - ✅ REAL ACTIVITY DETECTED - Active sessions
+ * - ✅ LIFETIME POINTS DETECTED - Has earnings
+ * - ❔ UNCLEAR - Ambiguous data
+ */
 function analyzeDataQuality(data) {
   const stats = data.value || data.data || data;
   

@@ -1,3 +1,21 @@
+/**
+ * @fileoverview Simple WebSocket connection test with periodic stats polling
+ * @description Lightweight test utility that connects to the synchronizer WebSocket
+ * and sends stats requests every 10 seconds. Useful for continuous monitoring.
+ * 
+ * @module websocket-test
+ * @requires ws
+ * 
+ * Usage: node websocket-test.js
+ * 
+ * Features:
+ * - Connects to ws://localhost:3333
+ * - Sends stats request immediately on connection
+ * - Polls for stats every 10 seconds
+ * - Displays key metrics: sessions, users, points, traffic, connection state
+ * - Graceful shutdown on Ctrl+C
+ */
+
 const WebSocket = require('ws');
 
 console.log('🧪 Testing WebSocket connection to ws://localhost:3333...');
@@ -24,6 +42,15 @@ ws.on('open', () => {
   }, 10000);
 });
 
+/**
+ * Sends a stats request to the WebSocket server
+ * @function sendStatsRequest
+ * @complexity O(1) - Simple message send
+ * @calls ws.send, JSON.stringify
+ * @calledBy open event handler, periodic interval
+ * @description Increments request counter and sends { what: 'stats' } message
+ * with timestamp logging for request tracking
+ */
 function sendStatsRequest() {
   requestCount++;
   const statsRequest = { what: 'stats' };

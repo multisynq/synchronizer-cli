@@ -1578,6 +1578,14 @@ async function startWebGUI(options = {}) {
 const usedPorts = new Set();
 
 // Clear used ports when servers shut down
+/**
+ * Clears the global used ports set to allow port reuse
+ * @function clearUsedPorts
+ * @complexity O(1) - Simple set clear operation
+ * @calledBy web command handler on server shutdown
+ * @description Resets the usedPorts Set when servers are stopped to allow
+ * the same ports to be used again in subsequent runs
+ */
 function clearUsedPorts() {
   usedPorts.clear();
 }

@@ -1,5 +1,30 @@
 #!/usr/bin/env node
 
+/**
+ * @fileoverview Pre-publish validation script for NPM package
+ * @description Performs comprehensive checks before publishing to NPM registry including:
+ * metadata validation, sensitive data scanning, permissions verification, and authentication status.
+ * 
+ * @module pre-publish-check
+ * @requires fs
+ * @requires path
+ * @requires child_process
+ * 
+ * Usage: node pre-publish-check.js
+ * 
+ * Checks performed:
+ * 1. Package.json metadata (author, repository)
+ * 2. Files to be published (npm pack --dry-run)
+ * 3. Sensitive data patterns in code
+ * 4. Executable permissions on index.js
+ * 5. NPM authentication status
+ * 6. Package name availability
+ * 
+ * Exit codes:
+ * - 0: All checks passed
+ * - 1: One or more checks failed
+ */
+
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
