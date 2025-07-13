@@ -9,6 +9,7 @@ const crypto = require('crypto');
 const os = require('os');
 const { spawn, execSync } = require('child_process');
 const express = require('express');
+const cors = require('cors');
 const packageJson = require('./package.json');
 const fetch = require('node-fetch'); // Add node-fetch for API validation
 const WebSocket = require('ws'); // Add WebSocket for real-time container communication
@@ -1302,7 +1303,11 @@ async function startWebGUI(options = {}) {
   // Create Express apps
   const guiApp = express();
   const metricsApp = express();
-  
+
+  // Add cors middleware to both apps
+  guiApp.use(cors());
+  metricsApp.use(cors());
+
   // Add authentication middleware to GUI app
   guiApp.use(authenticateRequest);
   
