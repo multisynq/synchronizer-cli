@@ -6308,6 +6308,8 @@ async function startWebSocketConnection(containerName) {
             };
             console.dir(latestContainerData, { depth: null });
             console.log(chalk.green(`✅ Received stats: sessions=${message.value.sessions}, users=${message.value.users}`));
+
+            statsRequestInProgress = false;
           }
           
         } catch (error) {
