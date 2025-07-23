@@ -49,6 +49,10 @@
 ## Installation
 
 ```bash
+apt install -y npm
+```
+
+```bash
 npm install -g synchronizer-cli
 ```
 
